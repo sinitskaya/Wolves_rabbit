@@ -248,7 +248,7 @@ int Game_Wolves_rabbit:: getHeuristicEvaluation()
 		}
 	}
 	
-	int min = MAX_VALUE; //255
+	int min = MAX_VALUE; 
 	for(int i = 0; i < 4; i++)
 	{
 		if( (this->map[0][i*2] > MIN_VALUE) && (this->map[0][i*2] < min) )
