@@ -1,10 +1,13 @@
 #pragma once
 #include <iostream>
+#include <iomanip>
 #include <queue>
 #include <string>
 using namespace std;
 #define MIN_VALUE 0
-#define MAX_VALUE 300
+#define MAX_VALUE 255
+#define Null -500
+#define recursivlevel 2
 
 class Position
 {
@@ -42,7 +45,8 @@ public:
 	};
 private:   
 	// 0 - заяц; 1, 2, 3, 4 - волки
-	const int MonsterCount = 5;
+	int MonsterCount;
+	void setMonsterCount(){this->MonsterCount = 5;}
 	MonsterType gameMode;  //тип игрока (волк, заяц); кем играет пользователь	
 
 	Position rabbit;			   //точка зайца
@@ -60,10 +64,13 @@ public:
 		Game_Wolves_rabbit();
 		void prepareMap();
 		void printMap();
+		//void InitialPrintMap();
+		void UpdatePrintMap();
+
 		//раставить игроков (фишки) на шахматной доске
 		void initialize();
 		//установить кем играет пользователь
-		void setPlayMode(MonsterType gameMode) {this->gameMode = gameMode;};
+		void setGameMode(MonsterType gameMode) {this->gameMode = gameMode;};
 		MonsterType getGameMode() {return this->gameMode;}
 		MonsterType getWinner() {return this->winner;}
 
@@ -80,7 +87,8 @@ public:
 			else
 			{
 				cout << "ошибка 1"<< endl;
-				//return ;
+				Position p; p.x = -100; p.y = -100;
+				return p;
 			}
 		}
 
@@ -119,7 +127,8 @@ public:
 		bool cheakRange(Position position) {return cheakRange( position.x, position.y );}
 		//игра закончилась
 		bool isGameOver();/*если да тоreturn winner*/
-
+		//void printWinner();
+		MonsterType GetWinner() {return this->winner;}
 		//старт/перезапуск игры
 		void reset();
 
@@ -137,7 +146,7 @@ public:
 		//эвристическая оценка вероятности победы. Чем больше, тем вероятнее, что победят волки.
 		int getHeuristicEvaluation();
 
-		//минимакс с отсечением
+		//алгоритм минимакса
 		int runMinMax(MonsterType monster, int recursivLevel, int alpha, int beta);
 
 		int MaxValue(int elem1, int elem2)
